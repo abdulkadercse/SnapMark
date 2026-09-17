@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../app/app.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../providers/settings_provider.dart';
 
@@ -23,6 +24,13 @@ class SettingsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Preferences', style: AppTypography.dialogTitle),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          tooltip: 'Back to History',
+          onPressed: () {
+            SnapMarkApp.of(context)?.openHistory();
+          },
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

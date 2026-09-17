@@ -19,7 +19,7 @@ class SystemTrayService with TrayListener {
   Future<void> initialize() async {
     final iconPath = Platform.isWindows ? 'assets/icons/app_icon.ico' : 'assets/icons/tray_icon.png';
     try {
-      await trayManager.setIcon(iconPath);
+      await trayManager.setIcon(iconPath, isTemplate: true);
     } catch (_) {}
 
     final shortcutLabel = Platform.isMacOS ? '⇧⌘9' : 'Ctrl+Shift+A';
@@ -29,24 +29,29 @@ class SystemTrayService with TrayListener {
         MenuItem(
           key: 'take_screenshot',
           label: 'Take screenshot      $shortcutLabel',
+          onClick: (_) => listener.onTakeScreenshotClicked(),
         ),
         MenuItem.separator(),
         MenuItem(
           key: 'history',
           label: 'History...',
+          onClick: (_) => listener.onHistoryClicked(),
         ),
         MenuItem(
           key: 'preferences',
           label: 'Preferences...',
+          onClick: (_) => listener.onPreferencesClicked(),
         ),
         MenuItem.separator(),
         MenuItem(
           key: 'about',
           label: 'About SnapMark',
+          onClick: (_) => listener.onAboutClicked(),
         ),
         MenuItem(
           key: 'quit',
           label: 'Quit SnapMark',
+          onClick: (_) => listener.onQuitClicked(),
         ),
       ],
     );

@@ -1,16 +1,33 @@
-# snapmark
+# SnapMark
 
-A new Flutter project.
+Offline-first Desktop Screenshot & Annotation Application.
+
+## Environment & Requirements
+
+- **Flutter Version:** `3.44.8` (Channel: `stable`)
+- **Dart Version:** `3.12.2`
+- **macOS Deployment Target:** `12.0` or higher
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Ensure dependencies are fetched:
+   ```bash
+   flutter pub get
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. For macOS desktop:
+   ```bash
+   cd macos && pod install && cd ..
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. Run the application:
+   ```bash
+   flutter run -d macos
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Global Shortcuts
+
+- **Take Screenshot:** `⇧⌘9` (macOS) / `Ctrl+Shift+A` (Windows/Linux)
+- **Cancel / Dismiss:** `Esc`
+- **Copy Image:** `⌘C` / `Ctrl+C`
+- **Save to Disk:** `⌘S` / `Ctrl+S`

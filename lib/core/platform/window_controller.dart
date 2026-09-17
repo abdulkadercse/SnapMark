@@ -7,11 +7,12 @@ class WindowController {
     await windowManager.ensureInitialized();
 
     const windowOptions = WindowOptions(
-      size: Size(800, 600),
+      size: Size(900, 600),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: true,
       titleBarStyle: TitleBarStyle.hidden,
+      title: 'SnapMark',
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
@@ -27,14 +28,13 @@ class WindowController {
     try {
       final primaryDisplay = await ScreenRetriever.instance.getPrimaryDisplay();
       final size = primaryDisplay.size;
-      final pos = primaryDisplay.visiblePosition ?? Offset.zero;
 
+      await windowManager.setFullScreen(false);
       await windowManager.setHasShadow(false);
-      await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-      await windowManager.setPosition(pos);
+      await windowManager.setTitleBarStyle(TitleBarStyle.hidden, windowButtonVisibility: false);
+      await windowManager.setPosition(Offset.zero);
       await windowManager.setSize(size);
       await windowManager.setAlwaysOnTop(true);
-      await windowManager.setFullScreen(true);
       await windowManager.show();
       await windowManager.focus();
     } catch (_) {}
@@ -43,7 +43,6 @@ class WindowController {
   /// Hides the overlay window to system tray
   static Future<void> hideOverlayWindow() async {
     try {
-      await windowManager.setFullScreen(false);
       await windowManager.setAlwaysOnTop(false);
       await windowManager.hide();
     } catch (_) {}
@@ -58,6 +57,7 @@ class WindowController {
       await windowManager.setFullScreen(false);
       await windowManager.setAlwaysOnTop(false);
       await windowManager.setTitleBarStyle(TitleBarStyle.normal);
+      await windowManager.setHasShadow(true);
       await windowManager.setSize(size);
       await windowManager.center();
       await windowManager.setTitle(title);

@@ -178,15 +178,20 @@ class _CaptureOverlayViewState extends State<CaptureOverlayView> {
       }
       verticalToolbarTop = selectionRect.top.clamp(4.0, screenSize.height - 380.0);
 
-      // 3. Horizontal Action Toolbar (Docked below selection)
+      // 3. Horizontal Action Toolbar (Docked below selection, right-aligned)
       const hToolbarHeight = 36.0;
+      const hToolbarWidth = 164.0;
       if (selectionRect.bottom + AppConstants.toolbarGap + hToolbarHeight > screenSize.height - 4) {
         // Flip inside or above
-        horizontalToolbarTop = selectionRect.bottom - hToolbarHeight - 4;
+        if (selectionRect.top - AppConstants.toolbarGap - hToolbarHeight >= 4) {
+          horizontalToolbarTop = selectionRect.top - AppConstants.toolbarGap - hToolbarHeight;
+        } else {
+          horizontalToolbarTop = selectionRect.bottom - hToolbarHeight - 4;
+        }
       } else {
         horizontalToolbarTop = selectionRect.bottom + AppConstants.toolbarGap;
       }
-      horizontalToolbarLeft = selectionRect.left.clamp(4.0, screenSize.width - 240.0);
+      horizontalToolbarLeft = (selectionRect.right - hToolbarWidth).clamp(4.0, screenSize.width - hToolbarWidth - 4.0);
     }
 
     return Focus(

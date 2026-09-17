@@ -12,7 +12,6 @@ class MainFlutterWindow: NSWindow {
     self.isOpaque = false
     self.backgroundColor = .clear
     self.hasShadow = false
-    self.orderOut(nil)
 
     RegisterGeneratedPlugins(registry: flutterViewController)
 

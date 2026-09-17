@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:window_manager/window_manager.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/extensions/rect_extensions.dart';
 import '../../../../core/platform/screen_capture_service.dart';
@@ -36,6 +37,10 @@ class CaptureProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      // Ensure any visible SnapMark window is hidden before capturing screen
+      await windowManager.hide();
+      await Future.delayed(const Duration(milliseconds: 150));
+
       // 1. Grab uncompressed screen bitmap
       final bytes = await screenCaptureService.captureEntireScreen();
       _rawImageBytes = bytes;

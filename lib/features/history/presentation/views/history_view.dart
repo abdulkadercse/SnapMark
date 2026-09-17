@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pasteboard/pasteboard.dart';
 import 'package:provider/provider.dart';
+import '../../../../app/app.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
+import '../../../capture/presentation/providers/capture_provider.dart';
 import '../providers/history_provider.dart';
 
 class HistoryView extends StatelessWidget {
@@ -17,9 +19,29 @@ class HistoryView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Capture History', style: AppTypography.dialogTitle),
+        title: const Text('SnapMark — Capture History', style: AppTypography.dialogTitle),
         elevation: 0,
         actions: [
+          FilledButton.icon(
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            ),
+            icon: const Icon(Icons.camera_alt, size: 16),
+            label: const Text('Take Screenshot (⇧⌘9)'),
+            onPressed: () {
+              final appState = SnapMarkApp.of(context);
+              appState?.openCaptureOverlay();
+              context.read<CaptureProvider>().triggerCapture();
+            },
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: 'Preferences',
+            onPressed: () {
+              SnapMarkApp.of(context)?.openSettings();
+            },
+          ),
           if (history.items.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.delete_sweep_outlined),
@@ -75,9 +97,24 @@ class HistoryView extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.photo_library_outlined, size: 48, color: Colors.grey.shade600),
-                            const SizedBox(height: 12),
-                            const Text('No captures found in history.', style: AppTypography.body),
+                            Icon(Icons.photo_library_outlined, size: 56, color: Colors.grey.shade500),
+                            const SizedBox(height: 16),
+                            const Text('No captures yet in history.', style: AppTypography.bodyBold),
+                            const SizedBox(height: 6),
+                            Text(
+                              'Press ⇧⌘9 or click below to capture any portion of your screen.',
+                              style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                            ),
+                            const SizedBox(height: 18),
+                            FilledButton.icon(
+                              icon: const Icon(Icons.camera_alt),
+                              label: const Text('Take Screenshot Now'),
+                              onPressed: () {
+                                final appState = SnapMarkApp.of(context);
+                                appState?.openCaptureOverlay();
+                                context.read<CaptureProvider>().triggerCapture();
+                              },
+                            ),
                           ],
                         ),
                       )

@@ -22,10 +22,16 @@ enum AppCurrentScreen {
 }
 
 class SnapMarkApp extends StatefulWidget {
+  static final GlobalKey<SnapMarkAppState> globalKey = GlobalKey<SnapMarkAppState>();
+
   const SnapMarkApp({super.key});
 
-  static SnapMarkAppState? of(BuildContext context) {
-    return context.findAncestorStateOfType<SnapMarkAppState>();
+  static SnapMarkAppState? of([BuildContext? context]) {
+    if (context != null) {
+      final state = context.findAncestorStateOfType<SnapMarkAppState>();
+      if (state != null) return state;
+    }
+    return globalKey.currentState;
   }
 
   @override
@@ -33,7 +39,7 @@ class SnapMarkApp extends StatefulWidget {
 }
 
 class SnapMarkAppState extends State<SnapMarkApp> {
-  AppCurrentScreen _currentScreen = AppCurrentScreen.captureOverlay;
+  AppCurrentScreen _currentScreen = AppCurrentScreen.history;
   Uint8List? _pinnedImageBytes;
 
   void openCaptureOverlay() {

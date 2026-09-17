@@ -57,7 +57,7 @@ void main() async {
       ],
       child: TrayHandlerWrapper(
         key: trayHandlerKey,
-        child: const SnapMarkApp(),
+        child: SnapMarkApp(key: SnapMarkApp.globalKey),
       ),
     ),
   );
